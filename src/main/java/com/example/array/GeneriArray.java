@@ -1,16 +1,23 @@
 package com.example.array;
 
 
-public class Array {
-    private int[] data;
+import org.omg.CORBA.Object;
+
+/**
+ * TODO 将IntArray 改为泛型 GenericArray
+ * 引用比较 和 值比较的区别
+ * @param <E>
+ */
+public class GeneriArray<E> {
+    private E[] data;
     private int size;
 
-    public Array(int capacity) {
-        data = new int[capacity];
+    public GeneriArray(int capacity) {
+        data = (E[]) new Object[capacity];
         size = 0;
     }
 
-    public Array() {
+    public GeneriArray() {
         this(10);
     }
 
@@ -31,12 +38,12 @@ public class Array {
         return size == 0;
     }
 
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
     }
 
     // 数组添加元素(从尾部添加)
-    public void addLast(int e) {
+    public void addLast(E e) {
 //        if (size == data.length)
 //            throw new IllegalArgumentException("AddLast failed. Array is full");
 //
@@ -46,7 +53,7 @@ public class Array {
     }
 
     // 向数组指定位置添加元素
-    public void add(int index, int e) {
+    public void add(int index, E e) {
         if (size == data.length)
             throw new IllegalArgumentException("AddLast failed. Array is full");
 
@@ -62,20 +69,20 @@ public class Array {
         size++;
     }
 
-    int get(int index) {
+    E get(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed. Index is out of bound");
         return data[index];
     }
 
-    void set(int index, int e) {
+    void set(int index, E e) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed. Index is out of bound");
         data[index] = e;
     }
 
     // 查找数组中是否有元素e
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
             if (data[i] == e)
                 return true;
@@ -85,7 +92,7 @@ public class Array {
     }
 
     // 获取元素e的索引
-    public int find(int e) {
+    public int find(E e) {
         for (int i = 0; i < size; i++) {
             if (data[i] == e)
                 return i;
@@ -94,11 +101,11 @@ public class Array {
     }
 
     // 从数组中删除指定位置的元素
-    public int remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Index is out of bound");
 
-        int res = data[index];
+        E res = data[index];
 
         for (int i = index + 1; i < size; i++)
             data[i - 1] = data[i];
@@ -106,11 +113,11 @@ public class Array {
         return res;
     }
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLast() {
+    public E removeLast() {
         return remove(size - 1);
     }
 
@@ -119,7 +126,7 @@ public class Array {
      *
      * @param e
      */
-    public void removeElement(int e) {
+    public void removeElement(E e) {
         int index = find(e);
         if (index != -1)
             remove(index);
